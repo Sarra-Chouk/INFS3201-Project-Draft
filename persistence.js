@@ -8,5 +8,5 @@ const db = "INFS3201-Project"
 async function connectToDatabase(collectionName) {
     await client.connect()
     console.log(`Connected to the database, accessing collection: ${collectionName}`)
-    return client.db(db).collection(collectionName)
+    return client.db(db).collection(tasks)
 }
