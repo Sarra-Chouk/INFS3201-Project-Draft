@@ -12,5 +12,6 @@ async function connectDatabase() {
         await client.connect();
         db = client.db("INFS3201-Project");
         users = db.collection('users');
+        console.log("Ranem")
     }
 }
