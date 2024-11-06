@@ -5,9 +5,9 @@ const client = new MongoClient(uri)
 
 const db = "INFS3201-Project"
 
-async function connectToDatabase(collectionName) {
+async function connectToDatabase(cName) {
     await client.connect()
-    console.log(`Connected to the database, accessing collection: ${collectionName}`)
-    return client.db(db).collection(tasks)
+    console.log(`Connected to the database, accessing collection: ${cName}`)
+    return client.db(db).collection(cTasks)
 }
 
