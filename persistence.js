@@ -14,5 +14,6 @@ async function connectDatabase() {
         users = db.collection('users');
         console.log("Sarra")
         console.log("Ranem")
+        console.log("maha")
     }
 }
