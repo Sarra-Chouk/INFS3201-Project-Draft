@@ -13,5 +13,6 @@ async function connectDatabase() {
         await client.connect();
         db = client.db("INFS3201-Project");
         console.log("Sarra")
+        console.log("Chouk")
     }
 }
