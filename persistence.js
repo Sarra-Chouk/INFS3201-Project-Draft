@@ -10,3 +10,4 @@ async function connectToDatabase(collectionName) {
     console.log(`Connected to the database, accessing collection: ${collectionName}`)
     return client.db(db).collection(tasks)
 }
+
