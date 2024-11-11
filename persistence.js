@@ -7,7 +7,6 @@ let sessions = undefined
 let messages = undefined
 let badges = undefined
 
-
 async function connectDatabase() {
     if (!client) {
         client = new mongodb.MongoClient('mongodb+srv://60300372:INFS3201@infs3201.9arv1.mongodb.net/')
@@ -20,8 +19,54 @@ async function connectDatabase() {
     }
 }
 
+<<<<<<< HEAD
 async function getUserByEmail(email){
     await connectDatabase()
     const user = await users.findOne({ email });
     return user
 }
+=======
+async function saveSession(uuid, expiry, data) {
+    try {
+        await connectDatabase()
+        const session = {
+            sessionKey: uuid,
+            expiry: expiry,
+            data: data
+        }
+        await sessions.insertOne(session)
+        console.log("Session saved successfully.")
+    } catch (error) {
+        console.error("Error saving session:", error)
+    }
+}
+
+async function getSession(key) {
+    try {
+        await connectDatabase()
+        return await sessions.findOne({ sessionKey: key });
+    } catch (error) {
+        console.error("Error finding session data:", error)
+    }
+}
+
+async function deleteSession(key) {
+    try {
+        await connectDatabase()
+        const result = await sessions.deleteOne({ sessionKey: key });
+        if (result.deletedCount === 1) {
+            console.log("Session deleted successfully.");
+        } else {
+            console.log("No session found with the given key.");
+        }
+    } catch (error) {
+        console.error("Error deleting session:", error)
+    }
+}
+
+module.exports = {
+    saveSession,
+    getSession,
+    deleteSession
+}
+>>>>>>> 3b8b7d806e47755cf55a8f174a2716653b0801b3
