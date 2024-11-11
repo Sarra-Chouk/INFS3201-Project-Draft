@@ -52,8 +52,39 @@ async function checkLogin(email, password) {
     }
 }
 
+
+async function validateUsername(username) {
+    const existingUser = await persistence.getUserByUsername(username);
+    if (existingUser) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+
+async function createUser(username, email, password, languagesKnown, languageLearning, profilePicture) {
+    const user = {
+        username,
+        email,
+        password,
+        languagesKnown,
+        languageLearning,
+        profilePicture,
+    }
+    await persistence.createUser(user) 
+}
+
+async function updatePassword(email, newPassword) {
+    await persistence.updatePassword(email, newPassword)
+}
+
+
 module.exports = {
     startSession,
-    checkLogin
+    checkLogin,
+    validateUsername,
+    createUser,
+    updatePassword
 }
 
