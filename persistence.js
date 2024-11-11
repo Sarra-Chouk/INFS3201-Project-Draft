@@ -19,3 +19,27 @@ async function connectDatabase() {
         badges = db.collection('badges')
     }
 }
+
+async function getUserByUsername(username) {
+    await connectDatabase(); 
+    const user = await users.findOne({ username });
+    return user;
+}
+
+ //code to insert one user at a time
+async function createUser(user) {
+    await connectDatabase()
+    await users.insertOne(user) 
+
+}
+
+async function updatePassword(email, newPassword) {
+    
+}
+
+module.exports = {
+    connectDatabase,
+    createUser,
+    getUserByUsername
+
+}
