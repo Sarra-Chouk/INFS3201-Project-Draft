@@ -19,11 +19,7 @@ async function connectDatabase() {
     }
 }
 
-async function getUserByEmail(email){
-    await connectDatabase()
-    const user = await users.findOne({ email });
-    return user
-}
+
 async function saveSession(uuid, expiry, data) {
     try {
         await connectDatabase()
@@ -62,6 +58,11 @@ async function deleteSession(key) {
     }
 }
 
+async function getUserByEmail(email){
+    await connectDatabase()
+    const user = await users.findOne({ email });
+    return user
+}
 
 async function getUserByUsername(username) {
     await connectDatabase(); 
@@ -69,7 +70,6 @@ async function getUserByUsername(username) {
     return user;
 }
 
- //code to insert one user at a time
 async function createUser(user) {
     await connectDatabase()
     await users.insertOne(user) 
@@ -90,6 +90,7 @@ module.exports = {
     deleteSession,
     connectDatabase,
     getUserByUsername,
+    getUserByEmail,
     createUser,
     updatePassword
 }
