@@ -8,6 +8,28 @@ async function startSession(data) {
     return uuid
 }
 
+function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const user = persistence.getUserByEmail(email)
+    return emailRegex.test(email) && !user //!user return true if this email os not already saved in the db
+}
+
+function validatePassword(password) {
+    const lengthRegex = /^.{8,}$/
+    const numberRegex = /[0-9]/
+    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/ 
+    const upperCaseRegex = /[A-Z]/
+    const lowerCaseRegex = /[a-z]/
+
+    return (
+        lengthRegex.test(password) &&
+        numberRegex.test(password) &&
+        specialCharRegex.test(password) &&
+        upperCaseRegex.test(password) &&
+        lowerCaseRegex.test(password)
+    )
+}
+
 async function checkLogin(email, password) {
     try {
         const user = await persistence.getUserByEmail(email)
@@ -33,10 +55,5 @@ async function checkLogin(email, password) {
 module.exports = {
     startSession,
     checkLogin
-}const persistence = require("./persistence.js")
-
-function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const user = persistence.getUserByEmail(email)
-    return emailRegex.test(email) && !user
 }
+

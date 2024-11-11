@@ -19,13 +19,11 @@ async function connectDatabase() {
     }
 }
 
-<<<<<<< HEAD
 async function getUserByEmail(email){
     await connectDatabase()
     const user = await users.findOne({ email });
     return user
 }
-=======
 async function saveSession(uuid, expiry, data) {
     try {
         await connectDatabase()
@@ -69,4 +67,3 @@ module.exports = {
     getSession,
     deleteSession
 }
->>>>>>> 3b8b7d806e47755cf55a8f174a2716653b0801b3
