@@ -19,3 +19,9 @@ async function connectDatabase() {
         badges = db.collection('badges')
     }
 }
+
+async function getUserByEmail(email){
+    await connectDatabase()
+    const user = await users.findOne({ email });
+    return user
+}
