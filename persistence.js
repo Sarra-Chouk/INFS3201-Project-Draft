@@ -57,11 +57,7 @@ async function deleteSession(key) {
     }
 }
 
-module.exports = {
-    saveSession,
-    getSession,
-    deleteSession
-}
+
 async function getUserByUsername(username) {
     await connectDatabase(); 
     const user = await users.findOne({ username });
@@ -76,12 +72,19 @@ async function createUser(user) {
 }
 
 async function updatePassword(email, newPassword) {
-    
+    await connectDatabase(); 
+    await users.updateOne(
+        { email: email }, 
+        { $set: { password: newPassword } } 
+    );
+
 }
-
 module.exports = {
+    saveSession,
+    getSession,
+    deleteSession,
     connectDatabase,
+    getUserByUsername,
     createUser,
-    getUserByUsername
-
+    updatePassword
 }

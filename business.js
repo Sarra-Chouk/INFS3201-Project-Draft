@@ -30,10 +30,6 @@ async function checkLogin(email, password) {
     }
 }
 
-module.exports = {
-    startSession,
-    checkLogin
-}const persistence = require('./persistence.js')
 
 async function validateUsername(username) {
     const existingUser = await persistence.getUserByUsername(username);
@@ -57,7 +53,15 @@ async function createUser(username, email, password, languagesKnown, languageLea
     await persistence.createUser(user) 
 }
 
+async function updatePassword(email, newPassword) {
+    await persistence.updatePassword(email, newPassword)
+}
+
+
 module.exports = {
+    startSession,
+    checkLogin,
     validateUsername,
-    createUser
+    createUser,
+    updatePassword
 }
