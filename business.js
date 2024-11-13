@@ -12,6 +12,14 @@ async function startSession() {
     return uuid
 }
 
+async function getSession(key) {
+    return await persistence.getSession(key)
+}
+
+async function deleteSession(key) {
+    return await persistence.deleteSession(key)
+}
+
 async function checkLogin(email, password) {
     try {
         const user = await persistence.getUserByEmail(email)
@@ -93,6 +101,8 @@ async function updatePassword(email, newPassword) {
 
 module.exports = {
     startSession,
+    getSession,
+    deleteSession,
     checkLogin,
     validateEmail,
     validatePassword,
