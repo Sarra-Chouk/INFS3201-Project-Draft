@@ -1,0 +1,124 @@
+/* styles.css */
+
+/* Reset */
+* {
+    margin: auto;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Body Styling */
+body {
+    height: 100vh;
+    background-color: #F5EDED; /* Soft pink background */
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    background-color: #E2DAD6; /* Light beige */
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Header */
+h2 {
+    text-align: center;
+    color: #6482AD; /* Deep blue-gray */
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+form{
+    padding: 3%;
+    position: absolute;
+    left: 25%;
+    width: 50%;
+}
+
+
+fieldset{
+    margin: auto;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid  rgb(131, 128, 132);
+    background-color: rgb(255, 255, 255);
+    padding: 1%;
+}
+
+legend{
+    text-align: left;
+    font-size: 120%;
+    background-color: rgb(210, 188, 214);
+    color: black;
+    width: 40%;
+    padding: 10px;
+    padding-left: 5%;
+    border-radius: 5px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #6482AD;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #7FA1C3; /* Medium blue-gray */
+    border-radius: 5px;
+    font-size: 1em;
+    color: #333;
+    background-color: #F5EDED; /* Soft pink background for input */
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #6482AD; /* Darker blue-gray when focused */
+    box-shadow: 0 0 5px rgba(100, 130, 173, 0.5);
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #6482AD; /* Main color */
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #7FA1C3; /* Slightly lighter on hover */
+}
+
+/* Error Message */
+.error {
+    color: #e74c3c; /* Red for error messages */
+    margin-bottom: 15px;
+}
+
+/* Footer */
+p {
+    margin-top: 20px;
+    color: #6482AD;
+}
+
+p a {
+    color: #7FA1C3; /* Link color */
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
