@@ -19,14 +19,9 @@ async function connectDatabase() {
     }
 }
 
-async function saveSession(uuid, expiry, data) {
+async function saveSession(session) {
     try {
         await connectDatabase()
-        const session = {
-            sessionKey: uuid,
-            expiry: expiry,
-            data: data
-        }
         await sessions.insertOne(session)
         console.log("Session saved successfully.")
     } catch (error) {

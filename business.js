@@ -1,10 +1,14 @@
 const persistence = require('./persistence')
 const crypto = require("crypto")
 
-async function startSession(data) {
+async function startSession() {
     const uuid = crypto.randomUUID()
     const expiry = new Date(Date.now() + 5 * 60 * 1000)
-    await persistence.saveSession(uuid, expiry, data)
+    const session = {
+        sessionKey: uuid,
+        expiry: expiry
+    }
+    await persistence.saveSession(session)
     return uuid
 }
 
