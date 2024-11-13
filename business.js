@@ -69,24 +69,25 @@ async function validateUsername(username) {
     return !user //!user return true if this username doesn't exist = uniqe
 }
 
+function createSaltedHash(password) {
+    const salt = crypto.randomBytes(4).toString('hex');
+    const hash = crypto.createHash('sha1')
+    hash.update(salt+password)
+    const saltedHash = salt + ":" + hash.digest('hex')
+    return saltedHash
+}
+
 async function createUser(username, email, password, languagesKnown, languageLearning, profilePicture) {
+    const hashedPassword = createSaltedHash(password)
     const user = {
         username,
         email,
-        password,
+        hashedPaassword,
         languagesKnown,
         languageLearning,
         profilePicture,
     }
     await persistence.createUser(user) 
-}
-
-function createSaltedHash(password) {
-    const salt = crypto.randomBytes(4).toString('hex');
-    const hash = crypto.createHash('sha1')
-    hash.update(password)
-    const saltedHash = salt + ":" + hash.digest('hex')
-    return saltedHash
 }
 
 async function updatePassword(email, newPassword) {
