@@ -72,17 +72,17 @@ async function validateUsername(username) {
 function createSaltedHash(password) {
     const salt = crypto.randomBytes(4).toString('hex');
     const hash = crypto.createHash('sha1')
-    hash.update(salt+password)
+    hash.update(salt+password) //you forgot the salt here
     const saltedHash = salt + ":" + hash.digest('hex')
     return saltedHash
 }
 
 async function createUser(username, email, password, languagesKnown, languageLearning, profilePicture) {
-    const hashedPassword = createSaltedHash(password)
+    const hashedPassword = createSaltedHash(password) //you forgot to hash the password here before you create the user
     const user = {
         username,
         email,
-        hashedPaassword,
+        hashedPassword,
         languagesKnown,
         languageLearning,
         profilePicture,

@@ -80,7 +80,7 @@ async function createUser(user) {
     try {
         await connectDatabase()
         const result = await users.insertOne(user)
-        return result.insertedId
+        return result.insertedId //added the return of the id of the user that was created if we need it for checking
     }
     catch (error) {
         console.error("Error creating user:", error)
@@ -93,7 +93,7 @@ async function updatePassword(email, newPassword) {
         const result = await users.updateOne(
             { email: email },
             { $set: { password: newPassword } })
-        return result.modifiedCount > 0
+        return result.modifiedCount > 0 // added this to make sure that a password has been actually updated
     }
     catch (error) {
         console.error("Error updating password:", error)
