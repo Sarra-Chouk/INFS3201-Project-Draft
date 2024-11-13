@@ -19,7 +19,12 @@ async function connectDatabase() {
     }
 }
 
+<<<<<<< HEAD
 async function saveSession(session) {
+=======
+
+async function saveSession(uuid, expiry, data) {
+>>>>>>> e7c7e1af1671e6298f14e2835a3a7f283a5442c1
     try {
         await connectDatabase()
         await sessions.insertOne(session)
@@ -52,8 +57,39 @@ async function deleteSession(key) {
     }
 }
 
+async function getUserByEmail(email){
+    await connectDatabase()
+    const user = await users.findOne({ email });
+    return user
+}
+
+async function getUserByUsername(username) {
+    await connectDatabase(); 
+    const user = await users.findOne({ username });
+    return user;
+}
+
+async function createUser(user) {
+    await connectDatabase()
+    await users.insertOne(user) 
+
+}
+
+async function updatePassword(email, newPassword) {
+    await connectDatabase(); 
+    await users.updateOne(
+        { email: email }, 
+        { $set: { password: newPassword } } 
+    );
+
+}
 module.exports = {
     saveSession,
     getSession,
-    deleteSession
+    deleteSession,
+    connectDatabase,
+    getUserByUsername,
+    getUserByEmail,
+    createUser,
+    updatePassword
 }
