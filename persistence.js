@@ -52,32 +52,55 @@ async function deleteSession(key) {
     }
 }
 
-async function getUserByEmail(email){
-    await connectDatabase()
-    const user = await users.findOne({ email });
-    return user
+async function getUserByEmail(email) {
+    try {
+        await connectDatabase()
+        const user = await users.findOne({ email })
+        return user
+    }
+    catch (error) {
+        console.error("Error fetching user by email:", error)
+    }
+
 }
 
 async function getUserByUsername(username) {
-    await connectDatabase(); 
-    const user = await users.findOne({ username });
-    return user;
+    try {
+        await connectDatabase()
+        const user = await users.findOne({ username })
+        return user
+    }
+    catch (error) {
+        console.error("Error fetching user by username:", error)
+    }
+
 }
 
 async function createUser(user) {
-    await connectDatabase()
-    await users.insertOne(user) 
-
+    try {
+        await connectDatabase()
+        const result = await users.insertOne(user)
+        return result.insertedId
+    }
+    catch (error) {
+        console.error("Error creating user:", error)
+    }
 }
 
 async function updatePassword(email, newPassword) {
-    await connectDatabase(); 
-    await users.updateOne(
-        { email: email }, 
-        { $set: { password: newPassword } } 
-    );
+    try {
+        await connectDatabase()
+        const result = await users.updateOne(
+            { email: email },
+            { $set: { password: newPassword } })
+        return result.modifiedCount > 0
+    }
+    catch (error) {
+        console.error("Error updating password:", error)
+    }
 
 }
+
 module.exports = {
     saveSession,
     getSession,
