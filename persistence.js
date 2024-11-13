@@ -19,12 +19,7 @@ async function connectDatabase() {
     }
 }
 
-<<<<<<< HEAD
 async function saveSession(session) {
-=======
-
-async function saveSession(uuid, expiry, data) {
->>>>>>> e7c7e1af1671e6298f14e2835a3a7f283a5442c1
     try {
         await connectDatabase()
         await sessions.insertOne(session)
