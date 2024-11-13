@@ -1,11 +1,23 @@
 const persistence = require('./persistence')
 const crypto = require("crypto")
 
-async function startSession(data) {
+async function startSession() {
     const uuid = crypto.randomUUID()
     const expiry = new Date(Date.now() + 5 * 60 * 1000)
-    await persistence.saveSession(uuid, expiry, data)
+    const session = {
+        sessionKey: uuid,
+        expiry: expiry
+    }
+    await persistence.saveSession(session)
     return uuid
+}
+
+async function getSession(key) {
+    return await persistence.getSession(key)
+}
+
+async function deleteSession(key) {
+    return await persistence.deleteSession(key)
 }
 
 async function checkLogin(email, password) {
@@ -57,24 +69,25 @@ async function validateUsername(username) {
     return !user //!user return true if this username doesn't exist = uniqe
 }
 
+function createSaltedHash(password) {
+    const salt = crypto.randomBytes(4).toString('hex');
+    const hash = crypto.createHash('sha1')
+    hash.update(salt+password) //you forgot the salt here
+    const saltedHash = salt + ":" + hash.digest('hex')
+    return saltedHash
+}
+
 async function createUser(username, email, password, languagesKnown, languageLearning, profilePicture) {
+    const hashedPassword = createSaltedHash(password) //you forgot to hash the password here before you create the user
     const user = {
         username,
         email,
-        password,
+        hashedPassword,
         languagesKnown,
         languageLearning,
         profilePicture,
     }
     await persistence.createUser(user) 
-}
-
-function createSaltedHash(password) {
-    const salt = crypto.randomBytes(4).toString('hex');
-    const hash = crypto.createHash('sha1')
-    hash.update(password)
-    const saltedHash = salt + ":" + hash.digest('hex')
-    return saltedHash
 }
 
 async function updatePassword(email, newPassword) {
@@ -89,6 +102,8 @@ async function updatePassword(email, newPassword) {
 
 module.exports = {
     startSession,
+    getSession,
+    deleteSession,
     checkLogin,
     validateEmail,
     validatePassword,
