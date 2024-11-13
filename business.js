@@ -28,30 +28,30 @@ async function checkLogin(email, password) {
         }
         const [storedSalt, storedHash] = user.password.split(':')
         const hash = crypto.createHash('sha1')
-        hash.update(storedSalt + password)
+        hash.update(storedSalt + password) //Raneem there is no need to add the ":" here explanation in next comment
         const inputHash = hash.digest('hex')
-        if (inputHash === storedHash) {
+        if (inputHash === storedHash) { //we are comparing between the storedHash which is a hexadecimal number of the salt and the password and the inputHash which we did the same exact thing to
             return true
         } else {
             return false
         }
     }
-    catch(error) {
+    catch (error) {
         console.error('Error during login check:', error)
         return false
     }
 }
 
-function validateEmail(email) {
+async function validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const user = persistence.getUserByEmail(email)
-    return emailRegex.test(email) && !user //!user return true if this email doesn't exist = uniqe
+    return emailRegex.test(email) && !user //!user return true if this email doesn't exist = unique
 }
 
-function validatePassword(password) {
+async function validatePassword(password) {
     const lengthRegex = /^.{8,}$/
     const numberRegex = /[0-9]/
-    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/ 
+    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/
     const upperCaseRegex = /[A-Z]/
     const lowerCaseRegex = /[a-z]/
 
@@ -69,25 +69,27 @@ async function validateUsername(username) {
     return !user //!user return true if this username doesn't exist = uniqe
 }
 
-function createSaltedHash(password) {
+async function createSaltedHash(password) {
     const salt = crypto.randomBytes(4).toString('hex');
     const hash = crypto.createHash('sha1')
-    hash.update(salt+password) //you forgot the salt here
+    hash.update(salt + password) //you forgot the salt here
     const saltedHash = salt + ":" + hash.digest('hex')
     return saltedHash
 }
 
-async function createUser(username, email, password, languagesKnown, languageLearning, profilePicture) {
-    const hashedPassword = createSaltedHash(password) //you forgot to hash the password here before you create the user
-    const user = {
-        username,
-        email,
-        hashedPassword,
-        languagesKnown,
-        languageLearning,
-        profilePicture,
-    }
-    await persistence.createUser(user) 
+async function createUser(username, email, password, languagesKnown, languagesLearning, profilePicture) {
+    const hashedPassword = createSaltedHash(password) 
+    if (await validateEmail && await validateUsername && await validatePassword) {
+        const user = {
+            username: username,
+            email: email,
+            password: hashedPassword,
+            languagesKnown: languagesKnown,
+            languagesLerning: languagesLearning,
+            profilePicture: profilePicture,
+        }
+        await persistence.createUser(user)
+    } 
 }
 
 async function updatePassword(email, newPassword) {
@@ -98,7 +100,6 @@ async function updatePassword(email, newPassword) {
     const saltedHash = createSaltedHash(newPassword)
     await persistence.updatePassword(email, saltedHash)
 }
-
 
 module.exports = {
     startSession,
