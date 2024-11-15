@@ -3,20 +3,18 @@ const business = require('./business.js');
 const bodyParser = require('body-parser');
 const handlebars = require('express-handlebars');
 
-const app = express();
-app.set('views', __dirname + "/templates");
-app.set('view engine', 'handlebars');
+let app = express()
+app.set('views', __dirname+"/templates")
+app.set('view engine', 'handlebars')
+app.engine('handlebars', handlebars.engine())
+app.use(bodyParser.urlencoded({extended: false}))
 
-// Set up Handlebars with the main layout and specify layout directory
-app.engine('handlebars', handlebars.engine({
-    defaultLayout: 'main',
-    layoutsDir: __dirname + '/templates'
-}));
-app.use(express.static(__dirname + '/css'));
-
-let urlencodedParser = bodyParser.urlencoded({ extended: false });
-app.use(urlencodedParser);
-
+app.get('/', (req, res) => {
+    let message = req.query.message
+    res.render('signup', {
+        message: message
+    })
+})
 
 // Route: Display signup page
 app.get('/signup', (req, res) => {
@@ -33,6 +31,9 @@ app.post('/signup', async (req, res) => {
     }
 });
 
+app.get('/login', (req, res) => {
+    res.render('login');
+});
 
 app.listen(8000, () => {
     console.log("Application started");
