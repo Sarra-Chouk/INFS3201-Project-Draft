@@ -4,9 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/stylesheet.css"> 
+    <link rel="stylesheet" href="/css/style.css"> <!-- Link to your main stylesheet -->
 </head>
 <body>
-    {{{body}}}
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <!-- Add other navigation links as needed -->
+        </nav>
+    </header>
+
+    <!-- Main content area -->
+    <main>
+        {{{body}}} <!-- The body block for page-specific content -->
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Your Project Name. All rights reserved.</p>
+    </footer>
 </body>
 </html>
